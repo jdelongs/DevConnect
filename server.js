@@ -1,6 +1,9 @@
 const express = require("express");
+const connectDB = require('./config/db');
 
 const app = express();
+//connect dababase 
+connectDB();
 
 //test to make sure its running
 app.get("/", (req, res) => res.send("API running"));
