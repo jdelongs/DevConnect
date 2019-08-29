@@ -7,9 +7,9 @@ const Post = require('../../models/Post');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
-// @route  GET api/posts
+// @route  POST api/posts
 // @desc   Create a post
-// @access Public 
+// @access private
 router.post('/', [auth, [
     check('text', 'Text is required').not().isEmpty()
 ]],
@@ -35,4 +35,67 @@ router.post('/', [auth, [
             res.status(500).send('Server Error');
         }
     });
+
+// @route  GET api/posts
+// @desc   get all posts
+// @access private
+
+router.get('/', auth, async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ date: -1 });
+        res.json(posts);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route  GET api/posts
+// @desc   get post by id
+// @access private
+
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.json(post);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route  DELETE api/posts
+// @desc   delete a post 
+// @access private
+
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        //check if posts exists 
+        if (!post) {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+
+        // check if person deleting post is the user that posted it 
+        if (post.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not Authorized' });
+        }
+        await post.remove();
+        res.json({ msg: 'Post Removed' });
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        res.status(500).send('Server Error');
+    }
+});
 module.exports = router; 
