@@ -11,18 +11,18 @@ const EditProfile = ({
   history
 }) => {
   const [formData, setFormData] = useState({
-    company: '',
-    website: '',
-    location: '',
-    status: '',
-    skills: '',
-    githubusername: '',
-    bio: '',
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    youtube: '',
-    instagram: ''
+    company: "",
+    website: "",
+    location: "",
+    status: "",
+    skills: "",
+    githubusername: "",
+    bio: "",
+    twitter: "",
+    facebook: "",
+    linkedin: "",
+    youtube: "",
+    instagram: ""
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
@@ -39,11 +39,11 @@ const EditProfile = ({
       githubusername:
         loading || !profile.githubusername ? '' : profile.githubusername,
       bio: loading || !profile.bio ? '' : profile.bio,
-      twitter: loading || !profile.social ? '' : profile.social.twitter,
-      facebook: loading || !profile.social ? '' : profile.social.facebook,
-      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
-      youtube: loading || !profile.social ? '' : profile.social.youtube,
-      instagram: loading || !profile.social ? '' : profile.social.instagram
+      twitter: loading || !profile.social || !profile.social.twitter ? '' : profile.social.twitter,
+      facebook: loading || !profile.social || !profile.social.facebook ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social||  !profile.social.linkedin ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social || !profile.social.youtube ? '' : profile.social.youtube,
+      instagram: loading || !profile.social || !profile.social.instagram ? '' : profile.social.instagram
     });
   }, [loading, getCurrentProfile]);
 

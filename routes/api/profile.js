@@ -47,6 +47,7 @@ router.post('/', [auth,
         githubusername,
         skills,
         youtube,
+        facebook,
         twitter,
         instagram,
         linkedin
@@ -69,6 +70,7 @@ router.post('/', [auth,
     profileFields.social = {};
     if (youtube) profileFields.social.youtube = youtube;
     if (twitter) profileFields.social.twitter = twitter;
+    if (facebook) profileFields.social.facebook = facebook;
     if (instagram) profileFields.social.instagram = instagram;
     if (linkedin) profileFields.social.linkedin = linkedin;
 
