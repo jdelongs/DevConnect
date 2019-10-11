@@ -1,5 +1,5 @@
 {
-  "name": "devconnector",
+  "name": "devconnect",
   "version": "1.0.0",
   "description": "Social Network for Programmers",
   "main": "server.js",
